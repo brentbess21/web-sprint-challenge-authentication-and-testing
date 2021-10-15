@@ -1,13 +1,15 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 const router = require('express').Router();
+const User = require('./../users/users-model');
 
 router.post('/register', (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8)
   User.add({ username, password: hash })
     .then(user => {
-      res.status(201).json(user[0])
+      res.status(201).json(user)
     })
     .catch(next)
 
