@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 
 const router = require('express').Router();
 const User = require('./../users/users-model');
+const { usernameTaken } = require('./auth-middleware');
 
-router.post('/register', (req, res, next) => {
+router.post('/register', usernameTaken, (req, res, next) => {
   const { username, password } = req.body
   const hash = bcrypt.hashSync(password, 8)
   User.add({ username, password: hash })
@@ -41,7 +42,7 @@ router.post('/register', (req, res, next) => {
   */
 });
 
-router.post('/login', (req, res) => {
+router.post('/login',  (req, res) => {
   res.end('implement login, please!');
   /*
     IMPLEMENT
